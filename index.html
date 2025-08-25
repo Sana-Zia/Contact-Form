@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #f0f4ff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative Background Blobs */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 400px;
+      height: 400px;
+      background: #60a5fa;
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      width: 300px;
+      height: 300px;
+      background: #3b82f6;
+      bottom: -80px;
+      right: -80px;
+    }
+
+    .contact-container {
+      position: relative;
+      z-index: 1;
+      width: 90%;
+      max-width: 450px;
+      background-color: white;
+      padding: 25px 30px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(5px);
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #1f2937;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 14px;
+      resize: none;
+      outline: none;
+      background-color: #f8fafc;
+      color: #111827;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 4px #3b82f666;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #3b82f6;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #2563eb;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    @media (max-height: 600px) {
+      body {
+        align-items: flex-start;
+        padding-top: 20px;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contact-container">
+    <h2>Contact Us</h2>
+    <form id="contactForm" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required />
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      const name = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+
+      let isValid = true;
+      nameError.textContent = "";
+      emailError.textContent = "";
+
+      //name check
+      if (name.length < 2) {
+        nameError.textContent = "Please enter your full name.";
+        isValid = false;
+      }
+
+      //email check
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "Please enter a valid email.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+</body>
+</html>
